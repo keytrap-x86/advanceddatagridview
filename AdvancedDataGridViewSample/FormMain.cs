@@ -18,7 +18,7 @@ namespace AdvancedDataGridViewSample
         private SortedDictionary<int, string> _sortsaved = new SortedDictionary<int, string>();
 
         private bool _testtranslations = false;
-        private bool _testtranslationsFromFile = false;
+        private bool _testtranslationsFromFile = true;
 
         private static int DisplayItemsCounter = 100;
 
@@ -68,8 +68,8 @@ namespace AdvancedDataGridViewSample
             }
             if (_testtranslationsFromFile)
             {
-                AdvancedDataGridView.SetTranslations(AdvancedDataGridView.LoadTranslationsFromFile("lang.json"));
-                AdvancedDataGridViewSearchToolBar.SetTranslations(AdvancedDataGridViewSearchToolBar.LoadTranslationsFromFile("lang.json"));
+                AdvancedDataGridView.SetTranslations(AdvancedDataGridView.LoadTranslationsFromFile("lang_fr-FR.json"));
+                AdvancedDataGridViewSearchToolBar.SetTranslations(AdvancedDataGridViewSearchToolBar.LoadTranslationsFromFile("lang_fr-FR.json"));
             }
 
             //set filter and sort saved

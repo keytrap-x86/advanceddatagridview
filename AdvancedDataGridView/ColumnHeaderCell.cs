@@ -39,7 +39,7 @@ namespace Zuby.ADGV
 
         #region class properties and fields
 
-        private Image _filterImage = Properties.Resources.ColumnHeader_UnFiltered;
+        private Image _filterImage = Properties.Resources.ColumnHeader_Unfiltered;
         private Size _filterButtonImageSize = new Size(16, 16);
         private bool _filterButtonPressed = false;
         private bool _filterButtonOver = false;
@@ -77,8 +77,7 @@ namespace Zuby.ADGV
 
             _filterButtonImageSize = new Size((int)Math.Round(oldCell.Size.Height * 0.8), (int)Math.Round(oldCell.Size.Height * 0.8));
 
-            ColumnHeaderCell oldCellt = oldCell as ColumnHeaderCell;
-            if (oldCellt != null && oldCellt.MenuStrip != null)
+            if (oldCell is ColumnHeaderCell oldCellt && oldCellt.MenuStrip != null)
             {
                 MenuStrip = oldCellt.MenuStrip;
                 _filterImage = oldCellt._filterImage;
@@ -475,10 +474,7 @@ namespace Zuby.ADGV
         /// <param name="enabled"></param>
         public void SetChecklistTextFilterRemoveNodesOnSearchMode(bool enabled)
         {
-            if (MenuStrip != null)
-            {
-                MenuStrip.SetChecklistTextFilterRemoveNodesOnSearchMode(enabled);
-            }
+            MenuStrip?.SetChecklistTextFilterRemoveNodesOnSearchMode(enabled);
         }
 
         /// <summary>
@@ -486,10 +482,7 @@ namespace Zuby.ADGV
         /// </summary>
         public void SetTextFilterTextChangedDelayNodesDisabled()
         {
-            if (MenuStrip != null)
-            {
-                MenuStrip.SetTextFilterTextChangedDelayNodesDisabled();
-            }
+            MenuStrip?.SetTextFilterTextChangedDelayNodesDisabled();
         }
 
         /// <summary>
@@ -572,7 +565,7 @@ namespace Zuby.ADGV
                 if (ActiveFilterType == MenuStrip.FilterType.None)
                 {
                     if (ActiveSortType == MenuStrip.SortType.None)
-                        _filterImage = Properties.Resources.ColumnHeader_UnFiltered;
+                        _filterImage = Properties.Resources.ColumnHeader_Unfiltered;
                     else if (ActiveSortType == MenuStrip.SortType.ASC)
                         _filterImage = Properties.Resources.ColumnHeader_OrderedASC;
                     else
@@ -625,7 +618,7 @@ namespace Zuby.ADGV
                 errorText, cellStyle, advancedBorderStyle, paintParts);
 
             // Don't display a dropdown for Image columns
-            if (this.OwningColumn.ValueType == typeof(Bitmap))
+            if (OwningColumn.ValueType == typeof(Bitmap))
                 return;
 
             if (FilterAndSortEnabled && paintParts.HasFlag(DataGridViewPaintParts.ContentBackground))
@@ -633,13 +626,19 @@ namespace Zuby.ADGV
                 _filterButtonOffsetBounds = GetFilterBounds(true);
                 _filterButtonImageBounds = GetFilterBounds(false);
                 Rectangle buttonBounds = _filterButtonOffsetBounds;
+                Rectangle imageBounds = _filterButtonOffsetBounds;
+                imageBounds.Inflate(-1,-1);
+
                 if (clipBounds.IntersectsWith(buttonBounds))
                 {
                     ControlPaint.DrawBorder(graphics, buttonBounds, Color.Gray, ButtonBorderStyle.Solid);
                     buttonBounds.Inflate(-1, -1);
                     using (Brush b = new SolidBrush(_filterButtonOver ? Color.WhiteSmoke : Color.White))
+                    {
                         graphics.FillRectangle(b, buttonBounds);
-                    graphics.DrawImage(_filterImage, buttonBounds);
+                    }
+
+                    graphics.DrawImage(_filterImage, imageBounds);
                 }
             }
         }
@@ -745,17 +744,5 @@ namespace Zuby.ADGV
     }
 
     internal delegate void ColumnHeaderCellEventHandler(object sender, ColumnHeaderCellEventArgs e);
-    internal class ColumnHeaderCellEventArgs : EventArgs
-    {
-        public MenuStrip FilterMenu { get; private set; }
-
-        public DataGridViewColumn Column { get; private set; }
-
-        public ColumnHeaderCellEventArgs(MenuStrip filterMenu, DataGridViewColumn column)
-        {
-            FilterMenu = filterMenu;
-            Column = column;
-        }
-    }
 
 }

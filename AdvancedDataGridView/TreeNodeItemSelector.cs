@@ -46,7 +46,7 @@ namespace Zuby.ADGV
         /// <param name="value"></param>
         /// <param name="state"></param>
         /// <param name="nodeType"></param>
-        private TreeNodeItemSelector(String text, object value, CheckState state, CustomNodeType nodeType)
+        private TreeNodeItemSelector(string text, object value, CheckState state, CustomNodeType nodeType)
             : base(text)
         {
             CheckState = state;
@@ -123,7 +123,7 @@ namespace Zuby.ADGV
             }
             set
             {
-                CheckState = (value == true ? CheckState.Checked : CheckState.Unchecked);
+                CheckState = value == true ? CheckState.Checked : CheckState.Unchecked;
             }
         }
 

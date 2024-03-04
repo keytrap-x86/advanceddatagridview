@@ -96,7 +96,7 @@ namespace Zuby.ADGV
 
             //set default values
             if (!ButtonCloseEnabled)
-                this.Items.RemoveAt(0);
+                Items.RemoveAt(0);
             comboBox_columns.SelectedIndex = 0;
         }
 
@@ -140,7 +140,7 @@ namespace Zuby.ADGV
         {
             IDictionary<string, string> ret = new Dictionary<string, string>();
 
-            if (!String.IsNullOrEmpty(filename))
+            if (!string.IsNullOrEmpty(filename))
             {
                 //deserialize the file
                 try
@@ -175,23 +175,23 @@ namespace Zuby.ADGV
         /// </summary>
         private void RefreshComponentTranslations()
         {
-            this.comboBox_columns.BeginUpdate();
-            this.comboBox_columns.Items.Clear();
-            this.comboBox_columns.Items.AddRange(new object[] { Translations[TranslationKey.ADGVSTBComboBoxColumnsAll.ToString()] });
+            comboBox_columns.BeginUpdate();
+            comboBox_columns.Items.Clear();
+            comboBox_columns.Items.AddRange(new object[] { Translations[TranslationKey.ADGVSTBComboBoxColumnsAll.ToString()] });
             if (_columnsList != null)
                 foreach (DataGridViewColumn c in _columnsList)
                     if (c.Visible)
-                        this.comboBox_columns.Items.Add(c.HeaderText);
-            this.comboBox_columns.SelectedIndex = 0;
-            this.comboBox_columns.EndUpdate();
-            this.button_close.ToolTipText = Translations[TranslationKey.ADGVSTBButtonCloseToolTip.ToString()];
-            this.label_search.Text = Translations[TranslationKey.ADGVSTBLabelSearch.ToString()];
-            this.textBox_search.ToolTipText = Translations[TranslationKey.ADGVSTBTextBoxSearchToolTip.ToString()];
-            this.button_frombegin.ToolTipText = Translations[TranslationKey.ADGVSTBButtonFromBegin.ToString()];
-            this.button_casesensitive.ToolTipText = Translations[TranslationKey.ADGVSTBButtonCaseSensitiveToolTip.ToString()];
-            this.button_search.ToolTipText = Translations[TranslationKey.ADGVSTBButtonSearchToolTip.ToString()];
-            this.button_wholeword.ToolTipText = Translations[TranslationKey.ADGVSTBButtonWholeWordToolTip.ToString()];
-            this.textBox_search.Text = textBox_search.ToolTipText;
+                        comboBox_columns.Items.Add(c.HeaderText);
+            comboBox_columns.SelectedIndex = 0;
+            comboBox_columns.EndUpdate();
+            button_close.ToolTipText = Translations[TranslationKey.ADGVSTBButtonCloseToolTip.ToString()];
+            label_search.Text = Translations[TranslationKey.ADGVSTBLabelSearch.ToString()];
+            textBox_search.ToolTipText = Translations[TranslationKey.ADGVSTBTextBoxSearchToolTip.ToString()];
+            button_frombegin.ToolTipText = Translations[TranslationKey.ADGVSTBButtonFromBegin.ToString()];
+            button_casesensitive.ToolTipText = Translations[TranslationKey.ADGVSTBButtonCaseSensitiveToolTip.ToString()];
+            button_search.ToolTipText = Translations[TranslationKey.ADGVSTBButtonSearchToolTip.ToString()];
+            button_wholeword.ToolTipText = Translations[TranslationKey.ADGVSTBButtonWholeWordToolTip.ToString()];
+            textBox_search.Text = textBox_search.ToolTipText;
         }
 
         #endregion
